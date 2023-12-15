@@ -100,6 +100,11 @@ if [ ! -z "$PHP_REDIS_SESSION_HOST" ]; then
  sed -i 's/session.save_handler = files/session.save_handler = redis\nsession.save_path = "tcp:\/\/'${PHP_REDIS_SESSION_HOST}':6379"/g' /usr/local/etc/php/php.ini
 fi
 
+# Change output buffering
+if [ ! -z "$PHP_OUTPUT_BUFFERING" ]; then
+ sed -i "s/output_buffering = 4096/output_buffering = ${PHP_OUTPUT_BUFFERING}/g" /usr/local/etc/php/php.ini
+fi
+
 # Enable xdebug
 XdebugFile='/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'
 if [[ "$ENABLE_XDEBUG" == "1" ]] ; then
